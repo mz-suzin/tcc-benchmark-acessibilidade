@@ -1,0 +1,7 @@
+npx http-server src -p 8080 -c-1
+
+src: Serve apenas a pasta de código fonte.
+
+-p 8080: Define a porta.
+
+-c-1: Desabilita o cache (essencial para garantir que você está vendo a versão mais recente do código gerado).

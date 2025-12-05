@@ -1,0 +1,1 @@
+"Optou-se por manter os parâmetros de temperatura padrão do modelo (default settings) para preservar a validade ecológica do experimento, simulando a experiência real de um desenvolvedor utilizando a ferramenta em condições normais de trabalho."
