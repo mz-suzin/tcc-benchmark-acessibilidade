@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmark Navbar - Acessível</title>
+    <style>
+        /* CSS Variables para Consistência e Contraste */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            /* Contraste alto */
+            --primary-color: #005a9c;
+            /* Azul acessível WCAG AA */
+            --hover-bg: #f0f4f8;
+            --border-color: #d1d5db;
+            --focus-ring: 3px solid #005a9c;
+            --focus-offset: 2px;
+            --transition: all 0.2s ease-in-out;
+            --nav-height: 70px;
+        }
+
+        /* Reset e Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            color: var(--text-color);
+            background-color: #f9fafb;
+        }
+
+        /* Gerenciamento de Foco Visível (Acessibilidade Crítica) */
+        :focus-visible {
+            outline: var(--focus-ring);
+            outline-offset: var(--focus-offset);
+            border-radius: 4px;
+        }
+
+        /* Layout Principal */
+        header {
+            background: var(--bg-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        /* Navegação Desktop */
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: var(--hover-bg);
+            color: var(--primary-color);
+        }
+
+        /* Botão Dropdown */
+        .dropdown-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .dropdown-btn:hover {
+            background-color: var(--hover-bg);
+            color: var(--primary-color);
+        }
+
+        .dropdown-btn svg {
+            transition: transform 0.2s;
+        }
+
+        .dropdown-btn[aria-expanded="true"] svg {
+            transform: rotate(180deg);
+        }
+
+        /* Dropdown Menu */
+        .dropdown-wrapper {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            /* Alinhamento */
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+            list-style: none;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+        }
+
+        /* Estado aberto do Dropdown */
+        .dropdown-menu:not([hidden]) {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            display: block;
+        }
+
+        .dropdown-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .dropdown-item a:hover {
+            background-color: var(--hover-bg);
+            color: var(--primary-color);
+        }
+
+        /* Botão Hambúrguer (Mobile) */
+        .hamburger {
+            display: none;
+            background: none;
+            border: 1px solid transparent;
+            cursor: pointer;
+            padding: 0.5rem;
+            color: var(--text-color);
+            border-radius: 4px;
+        }
+
+        .hamburger:hover {
+            background-color: var(--hover-bg);
+        }
+
+        /* Responsividade (Mobile < 768px) */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .primary-nav {
+                position: absolute;
+                top: var(--nav-height);
+                left: 0;
+                width: 100%;
+                background: var(--bg-color);
+                border-top: 1px solid var(--border-color);
+                padding: 1rem 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                display: none;
+                /* Oculto por padrão */
+            }
+
+            .primary-nav.is-open {
+                display: block;
+            }
+
+            .nav-list {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            .nav-list li {
+                width: 100%;
+            }
+
+            .nav-link,
+            .dropdown-btn {
+                width: 100%;
+                justify-content: space-between;
+                padding: 1rem 1.5rem;
+                border-radius: 0;
+            }
+
+            /* Dropdown Mobile - Estilo Accordion */
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                border: none;
+                background-color: #f8f9fa;
+                /* Ligeiramente diferente para hierarquia visual */
+                margin-top: 0;
+                width: 100%;
+                padding: 0;
+                display: none;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .dropdown-menu:not([hidden]) {
+                display: block;
+                animation: slideDown 0.3s ease-out;
+            }
+
+            .dropdown-item a {
+                padding-left: 2.5rem;
+                /* Indentação para hierarquia */
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Utilitário para ocultar visualmente mas manter acessível */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header role="banner">
+        <div class="container">
+            <!-- 1. Logotipo -->
+            <a href="/" class="logo" aria-label="Página Inicial do Benchmark">
+                Benchmark
+            </a>
+
+            <!-- Botão Mobile Toggle -->
+            <button class="hamburger" id="mobile-menu-btn" aria-label="Menu principal" aria-expanded="false"
+                aria-controls="primary-nav">
+                <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+
+            <!-- Área de Navegação -->
+            <nav id="primary-nav" class="primary-nav" role="navigation" aria-label="Principal">
+                <ul class="nav-list">
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link">Sobre</a></li>
+
+                    <!-- 2. Item Serviços Dropdown -->
+                    <li class="dropdown-wrapper">
+                        <button type="button" class="dropdown-btn" id="services-toggle" aria-expanded="false"
+                            aria-controls="services-menu" aria-haspopup="true">
+                            Serviços
+                            <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+
+                        <ul id="services-menu" class="dropdown-menu" hidden aria-label="Submenu de Serviços">
+                            <li class="dropdown-item"><a href="#">Consultoria</a></li>
+                            <li class="dropdown-item"><a href="#">Desenvolvimento</a></li>
+                            <li class="dropdown-item"><a href="#">Design</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#" class="nav-link">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding: 2rem;">
+        <div class="container">
+            <h1>Bem-vindo ao Ambiente de Teste</h1>
+            <p>Use a tecla <kbd>Tab</kbd> para navegar pelo menu. O foco deve ser visível e lógico.</p>
+        </div>
+    </main>
+
+    <script>
+        /**
+         * Lógica de Navegação Acessível
+         * Gerencia estados ARIA e visibilidade
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const nav = document.getElementById('primary-nav');
+            const servicesBtn = document.getElementById('services-toggle');
+            const servicesMenu = document.getElementById('services-menu');
+            const isMobile = () => window.innerWidth <= 768;
+
+            // Função para alternar o Menu Mobile
+            mobileBtn.addEventListener('click', () => {
+                const isExpanded = mobileBtn.getAttribute('aria-expanded') === 'true';
+                mobileBtn.setAttribute('aria-expanded', !isExpanded);
+                nav.classList.toggle('is-open');
+
+                // UX Acessível: Alterar label para leitores de tela
+                mobileBtn.setAttribute('aria-label', isExpanded ? 'Abrir menu principal' : 'Fechar menu principal');
+            });
+
+            // Função para alternar o Dropdown
+            servicesBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Previne fechar imediatamente ao clicar
+                const isExpanded = servicesBtn.getAttribute('aria-expanded') === 'true';
+
+                if (isExpanded) {
+                    closeDropdown();
+                } else {
+                    openDropdown();
+                }
+            });
+
+            function openDropdown() {
+                servicesBtn.setAttribute('aria-expanded', 'true');
+                servicesMenu.removeAttribute('hidden');
+                // Gerenciamento de foco opcional: mover foco para o primeiro item se desejado, 
+                // mas manter no botão é padrão WCAG aceitável.
+            }
+
+            function closeDropdown() {
+                servicesBtn.setAttribute('aria-expanded', 'false');
+                servicesMenu.setAttribute('hidden', '');
+            }
+
+            // Fechar ao clicar fora (UX padrão)
+            document.addEventListener('click', (e) => {
+                if (!servicesBtn.contains(e.target) && !servicesMenu.contains(e.target)) {
+                    if (servicesBtn.getAttribute('aria-expanded') === 'true') {
+                        closeDropdown();
+                    }
+                }
+            });
+
+            // Fechar com a tecla ESC (WCAG Requirement)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    // Se o dropdown estiver aberto, fecha e retorna o foco para o botão
+                    if (servicesBtn.getAttribute('aria-expanded') === 'true') {
+                        closeDropdown();
+                        servicesBtn.focus();
+                    }
+                    // Se o menu mobile estiver aberto, fecha e foca no hamburger
+                    else if (isMobile() && mobileBtn.getAttribute('aria-expanded') === 'true') {
+                        mobileBtn.click();
+                        mobileBtn.focus();
+                    }
+                }
+            });
+
+            // Ajuste ao redimensionar a tela (Cleanup)
+            window.addEventListener('resize', () => {
+                if (!isMobile()) {
+                    // Resetar estados mobile se voltar para desktop
+                    nav.classList.remove('is-open');
+                    mobileBtn.setAttribute('aria-expanded', 'false');
+                    // Opcional: fechar dropdowns ao mudar layout drasticamente
+                    closeDropdown();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

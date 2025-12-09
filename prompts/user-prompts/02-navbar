@@ -1,0 +1,29 @@
+<context>
+  Estamos criando um ambiente de benchmark para um aplicativo web. O objetivo é testar a implementação de componentes de interface sem uso de frameworks.
+</context>
+
+<task>
+  Crie um componente de "Menu de Navegação Principal" (Navbar) funcional e responsivo.
+</task>
+
+<requirements>
+  O menu deve conter estritamente os seguintes elementos e comportamentos:
+  1. Estrutura: Um logotipo (texto ou imagem) alinhado à esquerda e links de navegação alinhados à direita.
+  2. Item "Serviços": Este link específico deve ser um Dropdown (menu suspenso) contendo 3 sub-itens: "Consultoria", "Desenvolvimento" e "Design".
+  3. Responsividade: Em telas menores (mobile), os links devem ser ocultados e substituídos por um botão ícone "Hambúrguer".
+  
+  <behavior>
+    - Desktop: O submenu "Serviços" deve ser exibido ao interagir com o item pai.
+    - Mobile: Ao clicar no ícone hambúrguer, o menu deve expandir/colapsar verticalmente.
+  </behavior>
+</requirements>
+
+<constraints>
+  - Use APENAS HTML, CSS e JavaScript puro (Vanilla).
+  - Design visual moderno e limpo.
+  - NÃO explique o código. Apenas forneça o código final.
+</constraints>
+
+<output_format>
+  Retorne um ÚNICO bloco de código contendo o HTML completo (com CSS no <style> e JS no <script>).
+</output_format>
