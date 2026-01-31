@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmark: Modal de Confirmação Acessível</title>
+    <style>
+        :root {
+            --primary-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #4b5563;
+            --danger: #dc2626;
+            --danger-hover: #b91c1c;
+            --neutral: #e5e7eb;
+            --neutral-hover: #d1d5db;
+            --focus-ring: #2563eb;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Gatilho */
+        .btn-trigger {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-trigger:hover {
+            background-color: var(--danger-hover);
+        }
+
+        .btn-trigger:focus-visible {
+            outline: 3px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        /* Modal (Elemento Dialog Nativo) */
+        dialog {
+            border: none;
+            border-radius: 8px;
+            padding: 0;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            background: var(--primary-bg);
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-content {
+            padding: 24px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.25rem;
+            color: var(--text-main);
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn-cancel {
+            background-color: var(--neutral);
+            color: var(--text-main);
+        }
+
+        .btn-cancel:hover {
+            background-color: var(--neutral-hover);
+        }
+
+        .btn-confirm {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background-color: var(--danger-hover);
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        /* Animação */
+        dialog[open] {
+            animation: show 0.3s ease normal;
+        }
+
+        @keyframes show {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <button id="openModal" class="btn-trigger" aria-haspopup="dialog">Excluir Conta</button>
+
+    <dialog id="confirmDialog" aria-labelledby="dialogTitle" aria-describedby="dialogDesc">
+        <div class="modal-content">
+            <h2 id="dialogTitle">Tem certeza?</h2>
+            <p id="dialogDesc">
+                Esta ação é permanente e todos os seus dados serão removidos imediatamente. Você não poderá recuperar o acesso após a exclusão.
+            </p>
+            
+            <div class="modal-actions">
+                <button id="cancelBtn" class="btn btn-cancel" type="button">Cancelar</button>
+                <button id="confirmBtn" class="btn btn-confirm" type="button">Sim, excluir</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script>
+        const modal = document.getElementById('confirmDialog');
+        const openBtn = document.getElementById('openModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+
+        // Abrir Modal
+        openBtn.addEventListener('click', () => {
+            modal.showModal();
+        });
+
+        // Fechar com Botão Cancelar
+        cancelBtn.addEventListener('click', () => {
+            modal.close();
+        });
+
+        // Fechar ao clicar no backdrop (fundo escuro)
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.close();
+            }
+        });
+
+        // Simular ação de exclusão
+        confirmBtn.addEventListener('click', () => {
+            console.warn("Ação Crítica: Conta Excluída.");
+            modal.close();
+            openBtn.innerText = "Conta Excluída";
+            openBtn.disabled = true;
+            openBtn.style.opacity = "0.5";
+            openBtn.style.cursor = "not-allowed";
+        });
+
+        // O elemento <dialog> nativo já gerencia:
+        // 1. Tecla "Esc" para fechar.
+        // 2. Trap de foco (mantém o tab dentro do modal).
+        // 3. Retorno de foco para o botão gatilho ao fechar.
+    </script>
+</body>
+</html>

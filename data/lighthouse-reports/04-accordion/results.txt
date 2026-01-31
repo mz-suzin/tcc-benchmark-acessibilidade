@@ -1,0 +1,13 @@
+Persona A
+Test nr  |  score
+-----------------
+1        |   96
+Document does not have a main landmark.
+
+
+
+Persona B
+Test nr  |  score
+-----------------
+1        |   98
+Document does not have a main landmark.

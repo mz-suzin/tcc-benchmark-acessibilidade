@@ -1,0 +1,12 @@
+Persona A
+Test nr  |  issues
+-----------------
+1        |   1
+
+Element has insufficient color contrast of 3.76 (foreground color: #ffffff, background color: #ef4444, font size: 10.0pt (13.3333px), font weight: normal). Expected contrast ratio of 4.5:1
+
+
+Persona B
+Test nr  |  issues
+-----------------
+1        |   0

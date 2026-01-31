@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmark - Modal Dialog</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --secondary: #e2e8f0;
+            --secondary-hover: #cbd5e1;
+            --white: #ffffff;
+            --radius: 12px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: var(--text);
+        }
+
+        /* Gatilho */
+        .btn-trigger {
+            padding: 12px 24px;
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-trigger:hover { background-color: var(--danger-hover); }
+        .btn-trigger:active { transform: scale(0.98); }
+
+        /* Modal */
+        dialog {
+            border: none;
+            border-radius: var(--radius);
+            padding: 0;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        dialog::backdrop {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            padding: 24px;
+        }
+
+        .modal-content h2 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+
+        .modal-content p {
+            font-size: 0.95rem;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-cancel {
+            background: var(--secondary);
+            color: #475569;
+        }
+
+        .btn-cancel:hover { background: var(--secondary-hover); }
+
+        .btn-confirm {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-confirm:hover { background: var(--danger-hover); }
+
+        /* Animação simples */
+        dialog[open] {
+            animation: show 0.3s ease normal;
+        }
+
+        @keyframes show {
+            from { opacity: 0; transform: translate(-50%, -45%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+    </style>
+</head>
+<body>
+
+    <button id="openModal" class="btn-trigger">Excluir Conta</button>
+
+    <dialog id="modal">
+        <div class="modal-content">
+            <h2>Tem certeza?</h2>
+            <p>Esta ação é irreversível. Todos os seus dados serão removidos permanentemente de nossos servidores.</p>
+            <div class="modal-actions">
+                <button id="closeModal" class="btn btn-cancel">Cancelar</button>
+                <button id="confirmAction" class="btn btn-confirm">Sim, excluir</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script>
+        const modal = document.getElementById('modal');
+        const openBtn = document.getElementById('openModal');
+        const closeBtn = document.getElementById('closeModal');
+        const confirmBtn = document.getElementById('confirmAction');
+
+        openBtn.addEventListener('click', () => modal.showModal());
+
+        closeBtn.addEventListener('click', () => modal.close());
+
+        confirmBtn.addEventListener('click', () => {
+            console.log('Ação confirmada');
+            modal.close();
+        });
+
+        // Fechar ao clicar no backdrop
+        modal.addEventListener('click', (e) => {
+            const dialogDimensions = modal.getBoundingClientRect();
+            if (
+                e.clientX < dialogDimensions.left ||
+                e.clientX > dialogDimensions.right ||
+                e.clientY < dialogDimensions.top ||
+                e.clientY > dialogDimensions.bottom
+            ) {
+                modal.close();
+            }
+        });
+    </script>
+</body>
+</html>

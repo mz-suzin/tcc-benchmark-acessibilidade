@@ -1,0 +1,29 @@
+<context>
+  Estamos criando um ambiente de benchmark para um aplicativo web. O objetivo é testar a implementação de componentes de interface sem uso de frameworks.
+</context>
+
+<task>
+  Crie um componente de "Janela Modal" (Dialog) de confirmação.
+</task>
+
+<requirements>
+  O código deve simular uma interface onde o usuário realiza uma ação crítica.
+  1. Elemento Gatilho: Um botão na página principal com o texto "Excluir Conta".
+  2. Conteúdo do Modal: Deve conter um Título ("Tem certeza?"), uma mensagem de aviso, um botão "Sim, excluir" e um botão "Cancelar".
+  3. Overlay: O modal deve aparecer sobrepondo o conteúdo da página com um fundo escurecido (backdrop).
+  
+  <behavior>
+    - Abertura: Ao clicar no botão "Excluir Conta", o modal deve surgir centralizado e bloquear a interação com a página de fundo.
+    - Fechamento: O usuário deve conseguir fechar o modal clicando em "Cancelar", clicando no fundo escuro (backdrop) ou pressionando a tecla física "Esc" (Escape).
+  </behavior>
+</requirements>
+
+<constraints>
+  - Use APENAS HTML, CSS e JavaScript puro (Vanilla).
+  - Design visual moderno e limpo.
+  - NÃO explique o código. Apenas forneça o código final.
+</constraints>
+
+<output_format>
+  Retorne um ÚNICO bloco de código contendo o HTML completo (com CSS no <style> e JS no <script>).
+</output_format>

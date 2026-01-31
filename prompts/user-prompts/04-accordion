@@ -1,0 +1,33 @@
+<context>
+  Estamos criando um ambiente de benchmark para um aplicativo web. O objetivo é testar a implementação de componentes de interface sem uso de frameworks.
+</context>
+
+<task>
+  Crie um componente de "Acordeão de Perguntas Frequentes" (FAQ Accordion).
+</task>
+
+<requirements>
+  O componente deve listar 3 perguntas comuns com suas respectivas respostas ocultas.
+  
+  <structure>
+    1. Cada item deve ter um cabeçalho visível (a pergunta) que atua como gatilho.
+    2. Abaixo do cabeçalho, deve haver o painel de conteúdo (a resposta).
+    3. Inclua um indicador visual (ícone de seta ou +/-) que muda de direção/formato quando o item está aberto ou fechado.
+  </structure>
+
+  <behavior>
+    - Estado Inicial: Todos os painéis de resposta devem estar ocultos (colapsados).
+    - Interação: Ao clicar no cabeçalho da pergunta, o painel de resposta correspondente deve expandir ou colapsar.
+    - É permitido que múltiplos painéis fiquem abertos ao mesmo tempo.
+  </behavior>
+</requirements>
+
+<constraints>
+  - Use APENAS HTML, CSS e JavaScript puro (Vanilla).
+  - Design visual moderno, com transições suaves na abertura (animação).
+  - NÃO explique o código. Apenas forneça o código final.
+</constraints>
+
+<output_format>
+  Retorne um ÚNICO bloco de código contendo o HTML completo (com CSS no <style> e JS no <script>).
+</output_format>

@@ -1,0 +1,17 @@
+Persona A
+Test nr  |  score
+-----------------
+1        |   85
+
+Background and foreground colors do not have a sufficient contrast ratio.
+Document does not have a main landmark.
+
+
+
+
+Persona B
+Test nr  |  score
+-----------------
+1        |   97
+
+Document does not have a main landmark.

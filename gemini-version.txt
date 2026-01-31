@@ -1,1 +1,2 @@
 models/gemini-3-pro-preview
+models/gemini-3-flash-preview

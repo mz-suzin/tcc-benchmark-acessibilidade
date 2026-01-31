@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Accordion - Benchmark</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg: #f8fafc;
+            --border: #e2e8f0;
+            --white: #ffffff;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .faq-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.05);
+        }
+
+        .faq-header {
+            width: 100%;
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .faq-icon {
+            width: 20px;
+            height: 20px;
+            transition: var(--transition);
+            color: var(--text-muted);
+        }
+
+        .faq-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: var(--transition);
+            padding: 0 1.25rem;
+        }
+
+        .faq-content-inner {
+            overflow: hidden;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            padding-bottom: 0;
+            transition: var(--transition);
+        }
+
+        /* Active State */
+        .faq-item.active {
+            border-color: var(--primary);
+        }
+
+        .faq-item.active .faq-header {
+            color: var(--primary);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+
+        .faq-item.active .faq-content {
+            grid-template-rows: 1fr;
+            padding-bottom: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="faq-container">
+        <!-- Item 1 -->
+        <div class="faq-item">
+            <button class="faq-header">
+                Como funciona o benchmark de performance?
+                <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="Stack 19 9l-7 7-7-7"></path><path d="m19 9-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-content">
+                <div class="faq-content-inner">
+                    O benchmark avalia o tempo de renderização, consumo de memória e interatividade do componente em diferentes condições de estresse do navegador.
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="faq-item">
+            <button class="faq-header">
+                Por que não utilizar frameworks neste teste?
+                <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m19 9-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-content">
+                <div class="faq-content-inner">
+                    Utilizar Vanilla JS permite medir o potencial máximo do navegador sem a sobrecarga (overhead) de camadas de abstração, garantindo resultados mais precisos.
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="faq-item">
+            <button class="faq-header">
+                Posso customizar o estilo visual?
+                <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m19 9-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="faq-content">
+                <div class="faq-content-inner">
+                    Sim. O componente foi construído com variáveis CSS (Custom Properties), facilitando a alteração de cores, espaçamentos e tempos de transição.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqHeaders = document.querySelectorAll('.faq-header');
+
+            faqHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const parent = header.parentElement;
+                    parent.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

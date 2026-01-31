@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmark FAQ Accordion - Fix</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --text-dark: #0f172a;
+            --text-light: #475569;
+            --border: #e2e8f0;
+            --bg-hover: #f8fafc;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            background-color: #f1f5f9;
+        }
+
+        .faq-accordion {
+            width: 100%;
+            max-width: 650px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-header {
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .faq-trigger {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: background-color var(--transition);
+        }
+
+        .faq-trigger:hover,
+        .faq-trigger:focus-visible {
+            background-color: var(--bg-hover);
+        }
+
+        .faq-trigger:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: -2px;
+        }
+
+        .faq-icon {
+            color: var(--primary);
+            transition: transform var(--transition);
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        /* Estado Expandido */
+        .faq-trigger[aria-expanded="true"] .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Lógica de Expansão (Animação suave usando Grid) */
+        .faq-panel {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows var(--transition), visibility var(--transition);
+            visibility: hidden;
+        }
+
+        /* Seletor corrigido: Quando o botão dentro do H3 vizinho está expandido */
+        .faq-item:has(.faq-trigger[aria-expanded="true"]) .faq-panel {
+            grid-template-rows: 1fr;
+            visibility: visible;
+        }
+
+        .faq-content {
+            overflow: hidden;
+        }
+
+        .faq-body {
+            padding: 0 1.5rem 1.25rem 1.5rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .faq-panel, .faq-icon {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="faq-accordion" role="presentation">
+        <!-- Item 1 -->
+        <div class="faq-item">
+            <h3 class="faq-header">
+                <button type="button" 
+                        class="faq-trigger" 
+                        aria-expanded="false" 
+                        aria-controls="panel-1" 
+                        id="btn-1">
+                    <span>Como funciona a transição suave sem altura fixa?</span>
+                    <svg class="faq-icon" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </h3>
+            <div id="panel-1" 
+                 class="faq-panel" 
+                 role="region" 
+                 aria-labelledby="btn-1">
+                <div class="faq-content">
+                    <div class="faq-body">
+                        Utilizamos CSS Grid com <code>grid-template-rows</code> variando de 0fr para 1fr. Isso permite que o navegador calcule a altura intrínseca do conteúdo automaticamente, mantendo a performance da animação.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="faq-item">
+            <h3 class="faq-header">
+                <button type="button" 
+                        class="faq-trigger" 
+                        aria-expanded="false" 
+                        aria-controls="panel-2" 
+                        id="btn-2">
+                    <span>O componente é acessível para leitores de tela?</span>
+                    <svg class="faq-icon" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </h3>
+            <div id="panel-2" 
+                 class="faq-panel" 
+                 role="region" 
+                 aria-labelledby="btn-2">
+                <div class="faq-content">
+                    <div class="faq-body">
+                        Sim. Ele utiliza semântica de <code>button</code> dentro de <code>h3</code>, atributos <code>aria-expanded</code> para indicar estado e <code>aria-controls</code> para associar o gatilho ao conteúdo, seguindo o padrão WAI-ARIA Accordion.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="faq-item">
+            <h3 class="faq-header">
+                <button type="button" 
+                        class="faq-trigger" 
+                        aria-expanded="false" 
+                        aria-controls="panel-3" 
+                        id="btn-3">
+                    <span>Posso abrir múltiplos itens simultaneamente?</span>
+                    <svg class="faq-icon" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </h3>
+            <div id="panel-3" 
+                 class="faq-panel" 
+                 role="region" 
+                 aria-labelledby="btn-3">
+                <div class="faq-content">
+                    <div class="faq-body">
+                        Sim. A implementação atual permite que cada item controle seu próprio estado de forma independente, atendendo ao requisito de permitir múltiplos painéis abertos ao mesmo tempo.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordion = document.querySelector('.faq-accordion');
+
+            accordion.addEventListener('click', (e) => {
+                const trigger = e.target.closest('.faq-trigger');
+                
+                if (!trigger) return;
+
+                const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+                
+                // Toggle do estado do botão
+                trigger.setAttribute('aria-expanded', !isExpanded);
+            });
+        });
+    </script>
+</body>
+</html>
