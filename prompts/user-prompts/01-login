@@ -1,28 +1,26 @@
 <context>
-  Estamos criando um ambiente de benchmark para um aplicativo web. O objetivo é testar a implementação de formulários sem uso de frameworks.
+  Estamos criando um ambiente de benchmark para um aplicativo web. objetivo é avaliar a implementação de componentes essenciais sem o uso de frameworks ou bibliotecas externas.
 </context>
 
 <task>
-  Crie um componente de "Formulário de Cadastro de Usuário" funcional.
+  Crie um componente de "Formulário de Login" funcional.
 </task>
 
 <requirements>
   O formulário deve conter estritamente os seguintes campos e comportamentos:
-  1. Campo "Nome Completo": Obrigatório.
-  2. Campo "E-mail": Obrigatório. Deve validar formato de e-mail válido.
-  3. Campo "Senha": Obrigatório. Deve exibir um texto de ajuda visível abaixo do campo: "A senha deve ter no mínimo 8 caracteres".
-  4. Campo "Telefone": Opcional. Deve aceitar apenas números.
-  5. Botão "Cadastrar": Ao clicar, deve validar os dados.
+  1. Campo "E-mail": Obrigatório. Deve validar o formato de e-mail.
+  2. Campo "Senha": Obrigatório. Deve exibir um texto de ajuda visível abaixo do campo: "A senha deve ter no mínimo 8 caracteres".
+  3. Botão "Entrar": Ao ser acionado, deve executar a validação dos dados.
   
   <behavior>
-    - Em caso de erro (campos vazios ou inválidos): Exiba mensagens de erro vermelhas abaixo dos campos afetados e bloqueie o envio.
-    - Em caso de sucesso: Exiba um alerta do navegador com a mensagem "Sucesso".
+    - Em caso de erro (campos vazios ou formato inválido): Exiba mensagens de erro textuais próximas aos campos afetados e impeça o envio.
+    - Em caso de sucesso: Remova o formulário e exiba uma mensagem de confirmação de sucesso diretamente na interface.
   </behavior>
 </requirements>
 
 <constraints>
   - Use APENAS HTML, CSS e JavaScript puro (Vanilla).
-  - Design centralizado na tela, com visual moderno.
+  - Design centralizado na tela.
   - NÃO explique o código. Apenas forneça o código final.
 </constraints>
 

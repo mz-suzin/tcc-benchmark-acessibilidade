@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso ao Sistema</title>
+  <style>
+    :root {
+      --bg-color: #f0f2f5;
+      --text-main: #1d1d1d;
+      --text-help: #4a4a4a;
+      --error-color: #ba1a1a;
+      --focus-color: #005fcc;
+      --btn-bg: #005fcc;
+      --btn-text: #ffffff;
+      --btn-hover: #004799;
+      --surface: #ffffff;
+      --border: #767676;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    main {
+      background-color: var(--surface);
+      padding: 2.5rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.2s;
+      color: var(--text-main);
+    }
+
+    input:focus-visible {
+      outline: 3px solid var(--focus-color);
+      outline-offset: 2px;
+      border-color: var(--focus-color);
+    }
+
+    input[aria-invalid="true"] {
+      border-color: var(--error-color);
+    }
+
+    input[aria-invalid="true"]:focus-visible {
+      outline-color: var(--error-color);
+    }
+
+    .help-text {
+      font-size: 0.875rem;
+      color: var(--text-help);
+      margin-top: 0.5rem;
+    }
+
+    .error-message {
+      color: var(--error-color);
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .error-message.active {
+      display: block;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.875rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--btn-text);
+      background-color: var(--btn-bg);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    button:hover {
+      background-color: var(--btn-hover);
+    }
+
+    button:focus-visible {
+      outline: 3px solid var(--focus-color);
+      outline-offset: 2px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    #success-section {
+      text-align: center;
+    }
+
+    #success-section:focus-visible {
+      outline: 3px solid var(--focus-color);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    #success-section h2 {
+      color: #006b33;
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div id="form-section">
+      <h1>Entrar na sua conta</h1>
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            required 
+            aria-required="true" 
+            autocomplete="email"
+          >
+          <span id="email-error" class="error-message" aria-live="polite"></span>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            required 
+            aria-required="true" 
+            aria-describedby="password-help" 
+            autocomplete="current-password"
+          >
+          <span id="password-help" class="help-text">A senha deve ter no mínimo 8 caracteres</span>
+          <span id="password-error" class="error-message" aria-live="polite"></span>
+        </div>
+
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+
+    <div id="success-section" class="hidden" role="status" tabindex="-1">
+      <h2>Login realizado com sucesso!</h2>
+      <p>Bem-vindo ao sistema. Você está autenticado.</p>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const emailError = document.getElementById('email-error');
+    const passwordError = document.getElementById('password-error');
+    const formSection = document.getElementById('form-section');
+    const successSection = document.getElementById('success-section');
+
+    const validateEmail = (email) => {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    };
+
+    const showError = (input, errorElement, message, baseDescribedBy = '') => {
+      input.setAttribute('aria-invalid', 'true');
+      errorElement.textContent = message;
+      errorElement.classList.add('active');
+      
+      const describedBy = baseDescribedBy ? `${baseDescribedBy} ${errorElement.id}` : errorElement.id;
+      input.setAttribute('aria-describedby', describedBy);
+    };
+
+    const clearError = (input, errorElement, baseDescribedBy = '') => {
+      input.removeAttribute('aria-invalid');
+      errorElement.textContent = '';
+      errorElement.classList.remove('active');
+      
+      if (baseDescribedBy) {
+        input.setAttribute('aria-describedby', baseDescribedBy);
+      } else {
+        input.removeAttribute('aria-describedby');
+      }
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      let isValid = true;
+      let firstInvalidInput = null;
+
+      clearError(emailInput, emailError);
+      clearError(passwordInput, passwordError, 'password-help');
+
+      const emailValue = emailInput.value.trim();
+      if (!emailValue) {
+        showError(emailInput, emailError, 'O campo e-mail é obrigatório.');
+        isValid = false;
+        firstInvalidInput = emailInput;
+      } else if (!validateEmail(emailValue)) {
+        showError(emailInput, emailError, 'Insira um formato de e-mail válido (ex: nome@dominio.com).');
+        isValid = false;
+        firstInvalidInput = emailInput;
+      }
+
+      const passwordValue = passwordInput.value;
+      if (!passwordValue) {
+        showError(passwordInput, passwordError, 'O campo senha é obrigatório.', 'password-help');
+        isValid = false;
+        if (!firstInvalidInput) firstInvalidInput = passwordInput;
+      } else if (passwordValue.length < 8) {
+        showError(passwordInput, passwordError, 'A senha informada é inválida. Ela deve ter no mínimo 8 caracteres.', 'password-help');
+        isValid = false;
+        if (!firstInvalidInput) firstInvalidInput = passwordInput;
+      }
+
+      if (!isValid) {
+        firstInvalidInput.focus();
+      } else {
+        formSection.classList.add('hidden');
+        successSection.classList.remove('hidden');
+        successSection.focus();
+      }
+    });
+  </script>
+</body>
+</html>

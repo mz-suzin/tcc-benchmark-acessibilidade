@@ -3,7 +3,7 @@
 </context>
 
 <task>
-  Crie um componente de "Janela Modal" (Dialog) de confirmação.
+  Crie um componente de "Janela Modal" (Dialog) de confirmação funcional.
 </task>
 
 <requirements>
@@ -13,8 +13,10 @@
   3. Overlay: O modal deve aparecer sobrepondo o conteúdo da página com um fundo escurecido (backdrop).
   
   <behavior>
-    - Abertura: Ao clicar no botão "Excluir Conta", o modal deve surgir centralizado e bloquear a interação com a página de fundo.
-    - Fechamento: O usuário deve conseguir fechar o modal clicando em "Cancelar", clicando no fundo escuro (backdrop) ou pressionando a tecla física "Esc" (Escape).
+    - Abertura: Ao clicar no botão "Excluir Conta", o modal deve aparecer centralizado. Enquanto o modal estiver visível, o usuário não deve conseguir interagir com nenhum elemento da página de fundo.
+    - Interação: Ao abrir, o usuário deve ser capaz de interagir imediatamente com os elementos de dentro do modal através do teclado.
+    - Fechamento: O modal deve ser fechado ao clicar em "Cancelar", ao clicar no fundo escurecido ou ao pressionar a tecla "Esc". 
+    - Pós-fechamento: Após o fechamento, o usuário deve conseguir retomar a navegação na página principal exatamente de onde parou.
   </behavior>
 </requirements>
 

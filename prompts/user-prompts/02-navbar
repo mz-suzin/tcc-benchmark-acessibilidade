@@ -3,18 +3,16 @@
 </context>
 
 <task>
-  Crie um componente de "Menu de Navegação Principal" (Navbar) funcional e responsivo.
+  Crie um componente de "Menu de Navegação Principal" (Navbar) funcional.
 </task>
 
 <requirements>
   O menu deve conter estritamente os seguintes elementos e comportamentos:
-  1. Estrutura: Um logotipo (texto ou imagem) alinhado à esquerda e links de navegação alinhados à direita.
-  2. Item "Serviços": Este link específico deve ser um Dropdown (menu suspenso) contendo 3 sub-itens: "Consultoria", "Desenvolvimento" e "Design".
-  3. Responsividade: Em telas menores (mobile), os links devem ser ocultados e substituídos por um botão ícone "Hambúrguer".
+  1. Estrutura: Um logotipo (em texto) alinhado à esquerda e uma lista de links de navegação (Início, Sobre, Serviços, Contato) alinhados à direita.
+  2. Item "Serviços": Este item deve funcionar como um menu suspenso (Dropdown) contendo 3 sub-itens: "Consultoria", "Desenvolvimento" e "Design".
   
   <behavior>
-    - Desktop: O submenu "Serviços" deve ser exibido ao interagir com o item pai.
-    - Mobile: Ao clicar no ícone hambúrguer, o menu deve expandir/colapsar verticalmente.
+    - O submenu "Serviços" deve ser exibido ao interagir com o item pai (ex: através de clique ou foco).
   </behavior>
 </requirements>
 

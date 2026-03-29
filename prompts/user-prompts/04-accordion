@@ -3,22 +3,17 @@
 </context>
 
 <task>
-  Crie um componente de "Acordeão de Perguntas Frequentes" (FAQ Accordion).
+  Crie um componente de "Acordião" (Accordion) funcional para uma seção de Perguntas Frequentes (FAQ).
 </task>
 
 <requirements>
-  O componente deve listar 3 perguntas comuns com suas respectivas respostas ocultas.
+  O componente deve conter 3 itens de FAQ. Cada item é composto por uma "Pergunta" (título) e uma "Resposta" (conteúdo que expande/colapsa).
+  1. Estrutura: Apenas um item pode estar expandido por vez. Ao abrir um novo item, o anterior deve ser fechado automaticamente.
+  2. Estado Inicial: Todos os itens devem iniciar colapsados (fechados).
   
-  <structure>
-    1. Cada item deve ter um cabeçalho visível (a pergunta) que atua como gatilho.
-    2. Abaixo do cabeçalho, deve haver o painel de conteúdo (a resposta).
-    3. Inclua um indicador visual (ícone de seta ou +/-) que muda de direção/formato quando o item está aberto ou fechado.
-  </structure>
-
   <behavior>
-    - Estado Inicial: Todos os painéis de resposta devem estar ocultos (colapsados).
-    - Interação: Ao clicar no cabeçalho da pergunta, o painel de resposta correspondente deve expandir ou colapsar.
-    - É permitido que múltiplos painéis fiquem abertos ao mesmo tempo.
+    - Interação: O usuário deve conseguir expandir ou colapsar o conteúdo ao interagir com o título da pergunta.
+    - Visual: Deve haver um indicador visual (como um ícone de seta ou sinal de mais/menos) que mude de estado conforme o item abre ou fecha.
   </behavior>
 </requirements>
 
