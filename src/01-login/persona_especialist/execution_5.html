@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso ao Sistema</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    main {
+      background: #ffffff;
+      padding: 2.5rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 420px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #111111;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #333333;
+    }
+
+    input {
+      padding: 0.75rem;
+      border: 1px solid #595959;
+      border-radius: 4px;
+      font-size: 1rem;
+      color: #1a1a1a;
+      background-color: #ffffff;
+      transition: border-color 0.2s;
+    }
+
+    input[aria-invalid="true"] {
+      border-color: #b3261e;
+      border-width: 2px;
+    }
+
+    input:focus-visible, 
+    button:focus-visible, 
+    #success-message:focus-visible {
+      outline: 3px solid #005fcc;
+      outline-offset: 2px;
+    }
+
+    .help-text {
+      font-size: 0.875rem;
+      color: #4d4d4d;
+      margin-top: 0.375rem;
+    }
+
+    .error-message {
+      font-size: 0.875rem;
+      color: #b3261e;
+      font-weight: 600;
+      margin-top: 0.375rem;
+      display: none;
+    }
+
+    .error-message:not(:empty) {
+      display: block;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.875rem;
+      background-color: #0056b3;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    button:hover {
+      background-color: #004494;
+    }
+
+    #success-message {
+      text-align: center;
+      color: #0f5132;
+      background-color: #d1e7dd;
+      border: 1px solid #badbcc;
+      padding: 2rem 1.5rem;
+      border-radius: 4px;
+    }
+
+    #success-message h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: #0a3622;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div id="form-container">
+      <h1>Entrar</h1>
+      <form id="login-form" novalidate>
+        
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            autocomplete="email"
+            aria-required="true" 
+            aria-describedby="email-error"
+          >
+          <span id="email-error" class="error-message" aria-live="polite"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            autocomplete="current-password"
+            aria-required="true" 
+            aria-describedby="password-help password-error"
+          >
+          <span id="password-help" class="help-text">A senha deve ter no mínimo 8 caracteres</span>
+          <span id="password-error" class="error-message" aria-live="polite"></span>
+        </div>
+
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+    
+    <div id="success-container"></div>
+  </main>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const emailError = document.getElementById('email-error');
+    const passwordError = document.getElementById('password-error');
+    const formContainer = document.getElementById('form-container');
+    const successContainer = document.getElementById('success-container');
+
+    const isValidEmail = (email) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    };
+
+    const setFieldError = (input, errorElement, message) => {
+      input.setAttribute('aria-invalid', 'true');
+      errorElement.textContent = message;
+    };
+
+    const clearErrors = () => {
+      [emailInput, passwordInput].forEach(input => {
+        input.removeAttribute('aria-invalid');
+      });
+      [emailError, passwordError].forEach(error => {
+        error.textContent = '';
+      });
+    };
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      clearErrors();
+
+      let hasError = false;
+      let firstInvalidElement = null;
+
+      const emailValue = emailInput.value.trim();
+      if (!emailValue) {
+        setFieldError(emailInput, emailError, 'O campo e-mail é obrigatório.');
+        hasError = true;
+        firstInvalidElement = emailInput;
+      } else if (!isValidEmail(emailValue)) {
+        setFieldError(emailInput, emailError, 'Formato de e-mail inválido.');
+        hasError = true;
+        firstInvalidElement = emailInput;
+      }
+
+      const passwordValue = passwordInput.value;
+      if (!passwordValue) {
+        setFieldError(passwordInput, passwordError, 'O campo senha é obrigatório.');
+        hasError = true;
+        if (!firstInvalidElement) firstInvalidElement = passwordInput;
+      } else if (passwordValue.length < 8) {
+        setFieldError(passwordInput, passwordError, 'A senha informada possui menos de 8 caracteres.');
+        hasError = true;
+        if (!firstInvalidElement) firstInvalidElement = passwordInput;
+      }
+
+      if (hasError) {
+        firstInvalidElement.focus();
+        return;
+      }
+
+      formContainer.remove();
+      
+      const successMessage = document.createElement('div');
+      successMessage.id = 'success-message';
+      successMessage.setAttribute('tabindex', '-1');
+      successMessage.setAttribute('role', 'status');
+      successMessage.innerHTML = `
+        <h2>Login realizado com sucesso!</h2>
+        <p>Bem-vindo ao sistema.</p>
+      `;
+      
+      successContainer.appendChild(successMessage);
+      successMessage.focus();
+    });
+  </script>
+</body>
+</html>
