@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input {
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    input.error {
+      border-color: #dc3545;
+    }
+
+    .help-text {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-top: 0.4rem;
+    }
+
+    .error-message {
+      font-size: 0.85rem;
+      color: #dc3545;
+      margin-top: 0.4rem;
+      display: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #success-container {
+      display: none;
+      text-align: center;
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      color: #28a745;
+      margin-bottom: 1rem;
+    }
+
+    .success-text {
+      font-size: 1.2rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <form id="login-form" novalidate>
+      <h2>Login</h2>
+      
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="Digite seu e-mail">
+        <span class="error-message" id="email-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
+        <span class="help-text">A senha deve ter no mínimo 8 caracteres</span>
+        <span class="error-message" id="senha-error"></span>
+      </div>
+
+      <button type="submit">Entrar</button>
+    </form>
+
+    <div id="success-container">
+      <div class="success-icon">✓</div>
+      <div class="success-text">Login realizado com sucesso!</div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const emailInput = document.getElementById('email');
+    const senhaInput = document.getElementById('senha');
+    const emailError = document.getElementById('email-error');
+    const senhaError = document.getElementById('senha-error');
+    const successContainer = document.getElementById('success-container');
+
+    function showError(inputElement, errorElement, message) {
+      inputElement.classList.add('error');
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+    }
+
+    function clearErrors() {
+      emailInput.classList.remove('error');
+      senhaInput.classList.remove('error');
+      emailError.style.display = 'none';
+      senhaError.style.display = 'none';
+      emailError.textContent = '';
+      senhaError.textContent = '';
+    }
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      clearErrors();
+
+      let isValid = true;
+      const emailValue = emailInput.value.trim();
+      const senhaValue = senhaInput.value;
+
+      if (emailValue === '') {
+        showError(emailInput, emailError, 'O campo e-mail é obrigatório.');
+        isValid = false;
+      } else if (!isValidEmail(emailValue)) {
+        showError(emailInput, emailError, 'Por favor, insira um formato de e-mail válido.');
+        isValid = false;
+      }
+
+      if (senhaValue === '') {
+        showError(senhaInput, senhaError, 'O campo senha é obrigatório.');
+        isValid = false;
+      } else if (senhaValue.length < 8) {
+        showError(senhaInput, senhaError, 'A senha informada é inválida (mínimo de 8 caracteres).');
+        isValid = false;
+      }
+
+      if (isValid) {
+        form.style.display = 'none';
+        successContainer.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
