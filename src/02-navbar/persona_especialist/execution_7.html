@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu de Navegação Acessível</title>
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #222222;
+      --text-light: #555555;
+      --primary-color: #0056b3;
+      --focus-color: #005fcc;
+      --border-color: #e0e0e0;
+      --hover-bg: #f5f5f5;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f9fafb;
+      color: var(--text-color);
+      line-height: 1.5;
+    }
+
+    /* Focus outline global para acessibilidade */
+    *:focus-visible {
+      outline: 3px solid var(--focus-color);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .site-header {
+      background-color: var(--bg-color);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 100;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 4rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-color);
+      text-decoration: none;
+      letter-spacing: -0.025em;
+    }
+
+    .nav-list {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link, .dropdown-toggle {
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-light);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      transition: color 0.2s, background-color 0.2s;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .nav-link:hover, .dropdown-toggle:hover {
+      color: var(--text-color);
+      background-color: var(--hover-bg);
+    }
+
+    .nav-link[aria-current="page"] {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    /* Dropdown Styles */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      fill: currentColor;
+      transition: transform 0.2s ease;
+    }
+
+    .dropdown-toggle[aria-expanded="true"] .dropdown-icon {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 0.5rem;
+      min-width: 14rem;
+      background-color: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      box-shadow: var(--shadow);
+      list-style: none;
+      padding: 0.5rem 0;
+    }
+
+    .dropdown-menu[hidden] {
+      display: none;
+    }
+
+    .dropdown-link {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: background-color 0.2s;
+    }
+
+    .dropdown-link:hover {
+      background-color: var(--hover-bg);
+    }
+
+    /* Região de anúncio para leitores de tela (visually hidden) */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo" aria-label="Página Inicial da Empresa">LogoEmpresa</a>
+      
+      <nav aria-label="Navegação Principal">
+        <ul class="nav-list">
+          <li><a href="#inicio" class="nav-link" aria-current="page">Início</a></li>
+          <li><a href="#sobre" class="nav-link">Sobre</a></li>
+          
+          <li class="dropdown">
+            <button 
+              type="button" 
+              class="dropdown-toggle" 
+              id="servicos-button"
+              aria-expanded="false" 
+              aria-controls="servicos-menu"
+              aria-haspopup="true">
+              Serviços
+              <svg class="dropdown-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                <path d="M7 10l5 5 5-5z"/>
+              </svg>
+            </button>
+            
+            <ul id="servicos-menu" class="dropdown-menu" aria-labelledby="servicos-button" hidden>
+              <li><a href="#consultoria" class="dropdown-link">Consultoria</a></li>
+              <li><a href="#desenvolvimento" class="dropdown-link">Desenvolvimento</a></li>
+              <li><a href="#design" class="dropdown-link">Design</a></li>
+            </ul>
+          </li>
+          
+          <li><a href="#contato" class="nav-link">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <!-- Conteúdo principal da página iria aqui -->
+    <div aria-live="polite" class="sr-only" id="a11y-announcer"></div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropdownToggle = document.getElementById('servicos-button');
+      const dropdownMenu = document.getElementById('servicos-menu');
+      const dropdownContainer = dropdownToggle.closest('.dropdown');
+      const announcer = document.getElementById('a11y-announcer');
+
+      const openDropdown = () => {
+        dropdownToggle.setAttribute('aria-expanded', 'true');
+        dropdownMenu.removeAttribute('hidden');
+        announcer.textContent = 'Submenu Serviços expandido.';
+      };
+
+      const closeDropdown = () => {
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+        dropdownMenu.setAttribute('hidden', '');
+        announcer.textContent = 'Submenu Serviços recolhido.';
+      };
+
+      const toggleDropdown = () => {
+        const isExpanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
+        if (isExpanded) {
+          closeDropdown();
+        } else {
+          openDropdown();
+        }
+      };
+
+      // Interação por clique no botão
+      dropdownToggle.addEventListener('click', toggleDropdown);
+
+      // Fechar ao clicar fora do componente
+      document.addEventListener('click', (event) => {
+        if (!dropdownContainer.contains(event.target)) {
+          const isExpanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
+          if (isExpanded) {
+            closeDropdown();
+          }
+        }
+      });
+
+      // Gerenciamento de teclado (Escape para fechar e retornar foco)
+      dropdownContainer.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          const isExpanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
+          if (isExpanded) {
+            closeDropdown();
+            dropdownToggle.focus();
+          }
+        }
+      });
+
+      // Prevenir "keyboard trap" e fechar submenu ao perder o foco
+      dropdownContainer.addEventListener('focusout', (event) => {
+        // Usamos setTimeout para permitir que o relatedTarget seja atualizado no DOM
+        setTimeout(() => {
+          if (!dropdownContainer.contains(document.activeElement)) {
+            const isExpanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
+            if (isExpanded) {
+              closeDropdown();
+            }
+          }
+        }, 0);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,17 +1,27 @@
-Persona A
-Gerou inputs com placeholders
-As labels de cada input não possuem um indicador visual que é required
-O campo da senha não possui autocomplete
-não foram utilizados nenhum tipo de atributo aria
-- Clicar em 'cadastrar' sem nenhuma opção preenchida
+Persona Default
+labels implementadas corretamente porem sem indicador visual de required
+O campo da senha e do email não possuem autocomplete e nenhum tipo de atributo aria
+Código pouco acessivel para leitor de telas (nao otimizado) - testado com NVDA
+gerou mensagens de erro customizadas pra cada tipo de erro
+Navegação via teclado funcional
+
+Ao clicar em "Entrar" sem nenhuma opção preenchida
 [X] mensagens de erro
 [ ] foco movido automaticamente para o primeiro campo
 
-Persona B
-Gerou inputs com placeholder, required, aria-required, aria-describedby. A div das mensagens de erro foram feitas com aria-live='polite'
-O form possui um wrapper de 'form-group' pra cada input
-input de senha com aria-autocomplete='list'
-mensagens de erro customizadas pra cada tipo de erro
-- Clicar em 'cadastrar' sem nenhuma opção preenchida
-[X] mensagens de erro
-[X] foco movido automaticamente para o primeiro campo
+Ao clicar em entrar com email e senha validos: Nenhum tipo de leitura por parte do leitor de tela
+
+Ao clicar em 'cadastrar' sem nenhuma opção preenchida: Mensagens de erro corretas porém foco não foi movido para o primeiro campo
+
+
+
+Persona Especialista
+labels implementadas corretamente porem sem indicador visual de required
+Gerou inputs com aria-required, aria-describedby, autocomplete, name, id. A div das mensagens de erro foram feitas com aria-live='polite'
+Código acessivel para leitor de telas - testado com NVDA
+gerou mensagens de erro customizadas pra cada tipo de erro
+Navegação via teclado funcional
+
+Ao clicar em entrar com email e senha validos: Leitor de tela informa que login foi efetuado com sucesso
+
+Ao clicar em 'cadastrar' sem nenhuma opção preenchida: Mensagens de erro corretas e foco foi movido para o primeiro campo

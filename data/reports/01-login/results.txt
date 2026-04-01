@@ -1,0 +1,29 @@
+LIGHTHOUSE
+
+Persona Default
+Test nr  |  score
+-----------------
+1        |   88
+
+Background and foreground colors do not have a sufficient contrast ratio.
+Document does not have a main landmark.
+
+Persona Especialista
+Test nr  |  score
+-----------------
+1        |   100
+
+AXE
+
+Persona Default
+Test nr  |  issues
+-----------------
+1        |   1
+
+Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds
+Element has insufficient color contrast of 3.97 (foreground color: #ffffff, background color: #007bff, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1
+
+Persona Especialista
+Test nr  |  issues
+-----------------
+1        |   0
