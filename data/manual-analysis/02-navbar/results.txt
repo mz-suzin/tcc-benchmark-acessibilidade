@@ -1,0 +1,17 @@
+Persona Default
+Navegação via teclado funcional, porém nao implementa navegação por arrow-keys no menu dropdown
+Implementação de aria-expanded e aria-haspopup, porém não implementou aria-controls
+menu do dropdown não possui aria-labelledby
+item ativo da navegação não possui aria-current="page"
+foco visivel implementa padrão do navegador 
+nao possui main e header landmarks
+
+
+Persona Especialista
+Navegação via teclado funcional
+Implementação de aria-expanded, aria-haspopup e aria-controls
+menu do dropdown possui aria-labelledby com link para o trigger
+Implementação de aria-live para notificar mudanças no estado do dropdown
+item ativo da navegação possui aria-current="page"
+foco visivel implementa classe customizada e mais acessível
+estruturação com landmarks header e main
