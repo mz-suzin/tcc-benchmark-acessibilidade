@@ -1,17 +1,28 @@
-Persona A
+LIGHTHOUSE
+
+Persona Default
 Test nr  |  score
 -----------------
-1        |   85
+1        |   89
 
 Background and foreground colors do not have a sufficient contrast ratio.
-Document does not have a main landmark.
+Low-contrast text is difficult or impossible for many users to read.
 
-
-
-
-Persona B
+Persona Especialista
 Test nr  |  score
 -----------------
-1        |   97
+1        |   100
 
-Document does not have a main landmark.
+AXE
+
+Persona Default
+Test nr  |  issues
+-----------------
+1        |   1
+
+Element has insufficient color contrast of 3.76 (foreground color: #ffffff, background color: #ef4444, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+
+Persona Especialista
+Test nr  |  issues
+-----------------
+1        |   0

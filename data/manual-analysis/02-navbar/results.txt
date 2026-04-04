@@ -5,7 +5,7 @@ menu do dropdown não possui aria-labelledby
 item ativo da navegação não possui aria-current="page"
 foco visivel implementa padrão do navegador 
 nao possui main e header landmarks
-
+nao lidou com cenario para screen-readers
 
 Persona Especialista
 Navegação via teclado funcional
@@ -15,3 +15,4 @@ Implementação de aria-live para notificar mudanças no estado do dropdown
 item ativo da navegação possui aria-current="page"
 foco visivel implementa classe customizada e mais acessível
 estruturação com landmarks header e main
+criou uma div com role="status" e aria-live="polite" para notificar mudanças no estado do dropdown

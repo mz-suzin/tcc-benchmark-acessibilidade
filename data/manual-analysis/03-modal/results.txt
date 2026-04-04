@@ -1,23 +1,15 @@
-Persona A
-Utilizou html element dialog - porém axe devtools acusou um possível falso positivo, onde diz que não atingiu contraste minimo:
-Element has insufficient color contrast of 3.76 (foreground color: #ffffff, background color: #ef4444, font size: 10.0pt (13.3333px), font weight: normal). Expected contrast ratio of 4.5:1
+Persona Default
+Utilizou html element dialog
+Não criou focus-trap dentro do dialog
+Adicionou aria-label e aria-describedby no elemento dialog
+Trigger do dialog nao possui aria-haspopup="dialog"
+focus visible padrao do navegador
 
-A questão é que o elemento #ef4444 é o background do botão, então seguindo WCAG AA, passa sim pois é referente à elementos graficos. Mas talvez faltou algum aria-label pro axe tools saber discernir certinho.
-Não criou focus-trap
-não adicionou aria-hidden nem css inert ao background do modal
-o foco voltou pro trigger... mas só tem um elemento na pagina...
-nao adicionou NADA de aria
 
-Persona B
-Utilizou aria de forma perfeita
-focus trap não funcionou, apesar de ser default do navegador quando usa <dialog></dialog>
-4. Semântica ARIA
-Status: ✅ Conforme (Excelente)
-
-Análise:
-
-role="dialog" e aria-modal="true": Implícitos na tag <dialog>.
-
-aria-labelledby="dialogTitle": Implementado corretamente. O leitor de tela anunciará "Tem certeza?" imediatamente ao abrir o modal.
-
-aria-describedby="dialogDesc": Adição Excelente. O código vincula o parágrafo explicativo ao modal. O leitor de tela lerá o título e, na sequência (ou sob demanda), o texto de aviso, garantindo que o usuário cego não perca o contexto de irreversibilidade.
+Persona Especialista
+Utilizou html element dialog
+nao criou focus trap dentro do dialog
+Adicionou aria-label e aria-describedby no elemento dialog
+Trigger do dialog possui aria-haspopup="dialog"
+focus-visible customizado de alto contraste
+Ao clicar em excluir conta, foco não foi automaticamente para o proximo botão de fluxo de navegação, e sim voltou para o body.

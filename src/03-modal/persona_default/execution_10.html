@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmark - Modal de Confirmação</title>
+    <style>
+        :root {
+            --bg-page: #f3f4f6;
+            --bg-surface: #ffffff;
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --danger-base: #ef4444;
+            --danger-hover: #dc2626;
+            --secondary-base: #f3f4f6;
+            --secondary-hover: #e5e7eb;
+            --border-color: #e5e7eb;
+            --radius: 8px;
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--bg-surface);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .container h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .container p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--text-main);
+            outline-offset: 2px;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-base);
+            color: #ffffff;
+        }
+
+        .btn-danger:hover {
+            background-color: var(--danger-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-base);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        /* Estilos do Modal (Dialog) */
+        dialog {
+            margin: auto;
+            padding: 0;
+            border: none;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            background-color: var(--bg-surface);
+            max-width: 400px;
+            width: 90%;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        dialog[open] {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        dialog::backdrop {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        dialog[open]::backdrop {
+            opacity: 1;
+        }
+
+        .modal-content {
+            padding: 1.5rem;
+        }
+
+        .modal-header {
+            margin-bottom: 1rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <h1>Configurações</h1>
+        <p>Gerencie as preferências da sua conta e dados pessoais.</p>
+        <button type="button" id="btn-delete-account" class="btn btn-danger">Excluir Conta</button>
+    </main>
+
+    <dialog id="confirm-modal" aria-labelledby="modal-title" aria-describedby="modal-desc">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Tem certeza?</h2>
+            </div>
+            <div class="modal-body">
+                <p id="modal-desc">Esta ação é irreversível. Todos os seus dados, histórico e preferências serão apagados permanentemente dos nossos servidores.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-cancel" class="btn btn-secondary">Cancelar</button>
+                <button type="button" id="btn-confirm" class="btn btn-danger">Sim, excluir</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script>
+        const btnDeleteAccount = document.getElementById('btn-delete-account');
+        const modal = document.getElementById('confirm-modal');
+        const btnCancel = document.getElementById('btn-cancel');
+        const btnConfirm = document.getElementById('btn-confirm');
+
+        // Abrir o modal
+        btnDeleteAccount.addEventListener('click', () => {
+            modal.showModal();
+        });
+
+        // Fechar o modal pelo botão Cancelar
+        btnCancel.addEventListener('click', () => {
+            modal.close();
+        });
+
+        // Ação de confirmação (fecha o modal simulando a exclusão)
+        btnConfirm.addEventListener('click', () => {
+            modal.close();
+            // Lógica de exclusão entraria aqui
+        });
+
+        // Fechar o modal ao clicar no backdrop (fundo escurecido)
+        modal.addEventListener('click', (event) => {
+            const rect = modal.getBoundingClientRect();
+            const isClickInside = (
+                event.clientY >= rect.top &&
+                event.clientY <= rect.top + rect.height &&
+                event.clientX >= rect.left &&
+                event.clientX <= rect.left + rect.width
+            );
+
+            if (!isClickInside) {
+                modal.close();
+            }
+        });
+    </script>
+</body>
+</html>

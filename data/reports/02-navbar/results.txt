@@ -1,12 +1,25 @@
-Persona A
+LIGHTHOUSE
+
+Persona Default
+Test nr  |  score
+-----------------
+1        |   98
+
+Document does not have a main landmark.
+
+Persona Especialista
 Test nr  |  score
 -----------------
 1        |   100
 
+AXE
 
-
-
-Persona B
-Test nr  |  score
+Persona Default
+Test nr  |  issues
 -----------------
-1        |   100
+1        |   0
+
+Persona Especialista
+Test nr  |  issues
+-----------------
+1        |   0

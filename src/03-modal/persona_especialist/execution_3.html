@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benchmark - Modal Acessível</title>
+  <style>
+    :root {
+      --color-bg: #f8f9fa;
+      --color-text: #212529;
+      --color-text-muted: #495057;
+      --color-danger: #c92a2a;
+      --color-danger-hover: #b02525;
+      --color-btn-bg: #e9ecef;
+      --color-btn-hover: #dee2e6;
+      --color-focus: #005fcc;
+      --radius: 8px;
+      --transition: 0.2s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    main {
+      text-align: center;
+      padding: 2rem;
+      background: #ffffff;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background-color var(--transition), transform var(--transition);
+    }
+
+    button:focus-visible {
+      outline: 3px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .btn-danger {
+      background-color: var(--color-danger);
+      color: #ffffff;
+    }
+
+    .btn-danger:hover {
+      background-color: var(--color-danger-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-btn-bg);
+      color: var(--color-text);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--color-btn-hover);
+    }
+
+    dialog {
+      margin: auto;
+      padding: 2rem;
+      border: none;
+      border-radius: var(--radius);
+      background-color: #ffffff;
+      color: var(--color-text);
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(3px);
+    }
+
+    .modal-header {
+      margin-bottom: 1rem;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .modal-body {
+      margin-bottom: 1.5rem;
+      color: var(--color-text-muted);
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>Configurações do Perfil</h1>
+    <button type="button" id="trigger-delete-btn" class="btn-danger" aria-haspopup="dialog">
+      Excluir Conta
+    </button>
+  </main>
+
+  <dialog id="delete-confirmation-modal" aria-labelledby="modal-title" aria-describedby="modal-desc">
+    <div class="modal-header">
+      <h2 id="modal-title" class="modal-title">Tem certeza?</h2>
+    </div>
+    <div class="modal-body">
+      <p id="modal-desc">Esta ação é irreversível. Todos os seus dados, histórico e preferências serão perdidos permanentemente.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="cancel-btn" class="btn-secondary" autofocus>
+        Cancelar
+      </button>
+      <button type="button" id="confirm-btn" class="btn-danger">
+        Sim, excluir
+      </button>
+    </div>
+  </dialog>
+
+  <div id="announcer" class="sr-only" aria-live="polite" role="status"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const triggerBtn = document.getElementById('trigger-delete-btn');
+      const modal = document.getElementById('delete-confirmation-modal');
+      const cancelBtn = document.getElementById('cancel-btn');
+      const confirmBtn = document.getElementById('confirm-btn');
+      const announcer = document.getElementById('announcer');
+
+      triggerBtn.addEventListener('click', () => {
+        modal.showModal();
+      });
+
+      cancelBtn.addEventListener('click', () => {
+        modal.close();
+      });
+
+      modal.addEventListener('click', (event) => {
+        const rect = modal.getBoundingClientRect();
+        const isInDialog = (
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width
+        );
+        
+        if (!isInDialog) {
+          modal.close();
+        }
+      });
+
+      modal.addEventListener('close', () => {
+        triggerBtn.focus();
+      });
+
+      confirmBtn.addEventListener('click', () => {
+        modal.close();
+        announcer.textContent = 'Sua conta foi excluída com sucesso.';
+        
+        triggerBtn.textContent = 'Conta Excluída';
+        triggerBtn.disabled = true;
+        triggerBtn.classList.replace('btn-danger', 'btn-secondary');
+      });
+    });
+  </script>
+</body>
+</html>
