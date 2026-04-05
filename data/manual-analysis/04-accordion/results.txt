@@ -3,7 +3,7 @@ O código apresentado é visual e funcionalmente competente, utilizando uma téc
 Vínculos Semânticos (WCAG 1.3.1, 4.1.2)
 Instrução: O botão deve ter aria-controls apontando para o painel, e o painel aria-labelledby apontando para o botão.
 
-Status: ❌ Crítico (Ausente)
+Status: Crítico (Ausente)
 
 Análise: O código não possui IDs nos botões nem nos painéis de conteúdo. Consequentemente, não há os atributos aria-controls ou aria-labelledby.
 
@@ -12,7 +12,7 @@ Impacto: Um usuário cego ouve o botão, mas não tem garantia programática de 
 Estado Expandido (aria-expanded)
 Instrução: Uso correto de aria-expanded no botão.
 
-Status: ❌ Falha
+Status: Falha
 
 Análise: O código utiliza apenas a classe CSS .active no elemento pai (.faq-item) para controlar a visualização. Não existe nenhum atributo aria-expanded="false" ou true no botão (.faq-header).
 
@@ -21,7 +21,7 @@ Impacto: O leitor de tela anunciará o botão, mas não dirá se ele está "reco
 Uso de Heading e Button
 Instrução: O gatilho deve ser um <button> aninhado dentro de um heading (ex: <h3><button>).
 
-Status: ❌ Falha
+Status: Falha
 
 Análise: A estrutura atual é direta: <button class="faq-header">.
 
