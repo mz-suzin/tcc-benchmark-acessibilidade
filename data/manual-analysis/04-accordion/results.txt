@@ -1,4 +1,4 @@
-Persona A:
+Persona Default
 O código apresentado é visual e funcionalmente competente, utilizando uma técnica moderna de CSS (Grid) para animação de altura. No entanto, ele falha completamente nos requisitos de acessibilidade semântica. Para um usuário de leitor de tela, este componente não se comporta como um acordeão, mas apenas como uma lista de botões sem estado definido e sem conexão com o conteúdo que revelam.
 Vínculos Semânticos (WCAG 1.3.1, 4.1.2)
 Instrução: O botão deve ter aria-controls apontando para o painel, e o painel aria-labelledby apontando para o botão.
@@ -28,7 +28,7 @@ Análise: A estrutura atual é direta: <button class="faq-header">.
 Impacto: Usuários de leitores de tela frequentemente navegam pulando de cabeçalho em cabeçalho (H1, H2, H3) para "escanear" a página. Como os títulos das perguntas não estão em tags de cabeçalho (<h3>), eles são invisíveis para essa navegação rápida.
 
 
-PERSONA B:
+PERSONA Especialista:
 O código atende integralmente a todos os requisitos de acessibilidade e estrutura solicitados anteriormente:
 
 Vínculos Semânticos (WCAG 1.3.1, 4.1.2):
@@ -39,7 +39,7 @@ Verificação: O botão possui aria-controls="panel-1" e o painel possui aria-la
 
 Estado Expandido:
 
-Implementado: O controle de estado é feito exclusivamente via atributo aria-expanded.
+Implementado: O controle de estado é feito via atributo aria-expanded, com auxilio de um atributo customizado data-state.
 
 Verificação: O JavaScript altera este atributo, e o CSS reage a ele. Isso garante que o estado visual nunca esteja dessincronizado do estado semântico informado ao leitor de tela.
 

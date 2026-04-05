@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ - Perguntas Frequentes</title>
+  <style>
+    :root {
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --bg-primary: #ffffff;
+      --bg-page: #f3f4f6;
+      --border-color: #e5e7eb;
+      --focus-ring: #2563eb;
+      --hover-color: #1d4ed8;
+      --transition-speed: 0.3s;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.5;
+      padding: 2rem 1rem;
+    }
+
+    .faq-container {
+      max-width: 680px;
+      margin: 0 auto;
+      background-color: var(--bg-primary);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      padding: 2rem;
+    }
+
+    .faq-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+      text-align: center;
+    }
+
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .accordion-item {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      margin: 0;
+    }
+
+    .accordion-trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 1.25rem;
+      background: transparent;
+      border: none;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: left;
+      cursor: pointer;
+      transition: color var(--transition-speed) ease;
+    }
+
+    .accordion-trigger:hover {
+      color: var(--hover-color);
+    }
+
+    /* Indicador de foco acessível */
+    .accordion-trigger:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: -3px;
+      border-radius: 8px;
+    }
+
+    .accordion-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+      transition: transform var(--transition-speed) ease;
+    }
+
+    /* Rotação do ícone quando aberto */
+    .accordion-trigger[aria-expanded="true"] .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Animação suave usando CSS Grid */
+    .accordion-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--transition-speed) ease-out, visibility 0s linear var(--transition-speed);
+      visibility: hidden;
+    }
+
+    .accordion-panel[data-state="open"] {
+      grid-template-rows: 1fr;
+      transition: grid-template-rows var(--transition-speed) ease-out, visibility 0s linear 0s;
+      visibility: visible;
+    }
+
+    .accordion-content {
+      overflow: hidden;
+    }
+
+    .accordion-content-inner {
+      padding: 0 1.25rem 1.25rem 1.25rem;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <section class="faq-container" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="faq-title">Perguntas Frequentes</h2>
+      
+      <div class="accordion" id="faq-group">
+        
+        <!-- Item 1 -->
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-panel-1" id="faq-btn-1">
+              Como posso redefinir minha senha?
+              <svg class="accordion-icon" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+              </svg>
+            </button>
+          </h3>
+          <div id="faq-panel-1" class="accordion-panel" role="region" aria-labelledby="faq-btn-1" data-state="closed">
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                Para redefinir sua senha, acesse a página de login e clique em "Esqueci minha senha". Você receberá um e-mail com um link seguro para criar uma nova senha. O link expira em 24 horas.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-panel-2" id="faq-btn-2">
+              Quais são os métodos de pagamento aceitos?
+              <svg class="accordion-icon" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+              </svg>
+            </button>
+          </h3>
+          <div id="faq-panel-2" class="accordion-panel" role="region" aria-labelledby="faq-btn-2" data-state="closed">
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                Aceitamos diversas formas de pagamento, incluindo cartões de crédito (Visa, Mastercard, American Express), Pix com aprovação imediata e boleto bancário (compensação em até 3 dias úteis).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-panel-3" id="faq-btn-3">
+              Como faço para cancelar minha assinatura?
+              <svg class="accordion-icon" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+              </svg>
+            </button>
+          </h3>
+          <div id="faq-panel-3" class="accordion-panel" role="region" aria-labelledby="faq-btn-3" data-state="closed">
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                Você pode cancelar sua assinatura a qualquer momento acessando o painel da sua conta. Vá em "Configurações" > "Assinatura" e clique no botão "Cancelar plano". O acesso continuará ativo até o fim do ciclo de faturamento atual.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const triggers = document.querySelectorAll('.accordion-trigger');
+
+      triggers.forEach(trigger => {
+        // Interação de clique (mouse, touch e teclado via Enter/Space nativo do <button>)
+        trigger.addEventListener('click', () => {
+          const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+          
+          // Fecha todos os itens
+          triggers.forEach(t => {
+            t.setAttribute('aria-expanded', 'false');
+            const panelId = t.getAttribute('aria-controls');
+            document.getElementById(panelId).setAttribute('data-state', 'closed');
+          });
+
+          // Se o item clicado estava fechado, abre ele
+          if (!isExpanded) {
+            trigger.setAttribute('aria-expanded', 'true');
+            const panelId = trigger.getAttribute('aria-controls');
+            document.getElementById(panelId).setAttribute('data-state', 'open');
+          }
+        });
+
+        // Navegação por teclado (Setas) conforme diretrizes W3C APG
+        trigger.addEventListener('keydown', (e) => {
+          const triggersArray = Array.from(triggers);
+          const currentIndex = triggersArray.indexOf(trigger);
+          let nextIndex;
+
+          switch (e.key) {
+            case 'ArrowDown':
+              e.preventDefault();
+              nextIndex = (currentIndex + 1) % triggersArray.length;
+              triggersArray[nextIndex].focus();
+              break;
+            case 'ArrowUp':
+              e.preventDefault();
+              nextIndex = (currentIndex - 1 + triggersArray.length) % triggersArray.length;
+              triggersArray[nextIndex].focus();
+              break;
+            case 'Home':
+              e.preventDefault();
+              triggersArray[0].focus();
+              break;
+            case 'End':
+              e.preventDefault();
+              triggersArray[triggersArray.length - 1].focus();
+              break;
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
